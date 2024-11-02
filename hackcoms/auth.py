@@ -16,6 +16,11 @@ class RegistrationForm(FlaskForm):
     password     = PasswordField("Password", [validators.Length(min=6, max=25)])
     accept_rules = BooleanField('I accept the site rules', [validators.InputRequired()])
 
+class LoginForm(FlaskForm):
+    username     = StringField('Username', [validators.Length(min=4, max=25)])
+    password     = PasswordField("Password", [validators.Length(min=6, max=25)])
+    remember     = BooleanField("Remember Me")
+
 login_manager = LoginManager()
 auth = Blueprint("auth", __name__)
 
@@ -50,6 +55,27 @@ def register_user():
         return redirect(url_for("home.index"))
 
     return render_template("auth/register.html", form=form)
+
+@auth.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        username = request.form.get('username')
+
+        user = User.query.filter_by(username='username').first()
+        if user is None:
+            flash(f"Unable to find user {username}")
+            return redirect(url_for("auth.login"))
+
+        if not check_password_hash(user.password, request.form.get('password')):
+            flash("Invalid password")
+            return redirect(url_for("auth.login"))
+
+    remember_user = True if request.form.get("remember") else False
+    login_user(user, remember_user)
+
+    return redirect(url_for("home.index"))
 
 @auth.route("/logout")
 @login_required
