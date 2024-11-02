@@ -56,8 +56,14 @@ def register_user():
 
     return render_template("auth/register.html", form=form)
 
-@auth.route("/login", methods=["GET", "POST"])
+@auth.route("/login", methods=["GET"])
 def login():
+    form = LoginForm()
+
+    return render_template("auth/login.html", form=form)
+
+@auth.route("/login", methods=["POST"])
+def login_submit():
     form = LoginForm()
 
     if form.validate_on_submit():
