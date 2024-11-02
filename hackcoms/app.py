@@ -1,6 +1,8 @@
-from flask import Flask
 from db import db
 from auth import login_manager
+from messages import msgio
+
+from flask import Flask
 
 def create_app() -> Flask:
 	app = Flask(__name__)
@@ -10,6 +12,7 @@ def create_app() -> Flask:
 
 	login_manager.init_app(app)
 	db.init_app(app)
+	msgio.init_app(app)
 
 	return app
 

@@ -3,7 +3,7 @@ from typing import Optional, Tuple
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
-from sqlalchemy import DateTime, func
+from sqlalchemy import DateTime, ForeignKey, func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from werkzeug.security import generate_password_hash
 
@@ -46,13 +46,18 @@ class Ideas(db.Model):
 
 
 class Message(db.Model):
-	target_id: Mapped[int]
-	room_type: Mapped[int]
+	room: Mapped["Room"] = relationship()
+	sender: Mapped["User"] = relationship()
 	content: Mapped[str]
-	invite: Mapped[Optional[int]]
+	invite: Mapped[bool]
 	timestamp: Mapped[datetime.datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
+
+class Room(db.Model):
+	participants: Mapped[list[User]] = relationship()
+	latest_message: Mapped["Message"] = relationship()
+
 
 def create_user(
 	username: str, 
@@ -102,3 +107,21 @@ def create_idea(
 
 def list_roles() -> list[Tuple[str, str]]:
 	return [(r.role_name, r.role_description) for r in Role.query.all()]
+
+def create_message(
+	room: Room,
+	sender: User,
+	content: str,
+	invite: bool
+	) -> Message:
+	msg = Message(
+		room = room,
+		sender = sender,
+		content = content,
+		invite = invite
+	)
+
+	db.session.add(msg)
+	db.session.commit()
+
+	return msg
