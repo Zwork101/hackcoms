@@ -1,4 +1,3 @@
-from crypt import methods
 from db import User, create_user
 
 from flask import Blueprint, flash, render_template, request, redirect, url_for
