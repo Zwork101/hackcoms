@@ -24,6 +24,13 @@ class IdeaForm(FlaskForm):
 	asl_only              = BooleanField("ASL Fluency Required")
 	roles_needed          = SelectField("Required Roles", choices=list_roles)
 
+@ideas.route("/idea")
+@login_required
+def make_idea():
+
+	return render_template("ideas/make.html")
+
+
 @ideas.route("/idea/<idea_id:int>")
 def idea_page(idea_id: int):
 	idea = Ideas.query.get(idea_id)
@@ -33,7 +40,7 @@ def idea_page(idea_id: int):
 
 	return render_template("ideas/idea.html", idea=idea)
 
-@ideas.route("/idea/new", methods=["POST"])
+@ideas.route("/idea", methods=["POST"])
 @login_required
 def idea_creation():
 	form = IdeaForm()
@@ -49,6 +56,8 @@ def idea_creation():
 		)
 
 		return redirect(url_for("idea_page", idea_id=idea.id))
+
+	abort(400)
 
 @ideas.route("/idea-list")
 @ideas.route("/idea-list/<pagination:int>")

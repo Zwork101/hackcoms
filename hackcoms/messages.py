@@ -56,7 +56,7 @@ def ws_join(data):
 
 @msgio.on('message')
 @authenticated_only
-def ws_join(data):
+def ws_msg(data):
 	room = Room.query.get_or_404(data['room'])
 
 	if current_user not in room.participants:
