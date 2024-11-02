@@ -1,0 +1,23 @@
+
+body {
+    display: flex;
+    flex-flow: column;
+}
+
+#NavBar{
+    margin: 36px 12px 36px 12px;
+    display: flex;
+    justify-content: space-around;
+}
+#NavBar a{
+    padding: 6px;
+}
+#loginTitle{
+    width: 400px;
+    height: 500px;
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
