@@ -11,7 +11,7 @@ def create_app() -> Flask:
 
 	app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:pgpassword@129.21.103.183"
 	login_manager.login_view = 'auth.login'
-	app.config['SECRET_KEY'] = "uhnfoquih4nfvq7hn hq3v87qpv9893vh8 49q8u4vnp4q8q4098 h[qtv]"
+	app.config['SECRET_KEY'] = "uhnfoquih4nfvq7hn :hq3v87qpv9893vh8 49q8u4vnp4q8q4098 h[qtv]"
 
 	login_manager.init_app(app)
 	db.init_app(app)

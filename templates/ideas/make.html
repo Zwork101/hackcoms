@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+        <h1>New Idea:</h1>   
+        <section>
+        </section>
+        <form>
+            {{ form.csrf_token}}
+            {{ form.name.label }} {{ form.name() }}
+            {{ form.description.label }} {{ form.description() }}
+            {{ form.asl_only.label }} {{ form.asl_only() }}
+            {{ form.roles_needed.label }} {{ form.roles_needed() }}
+            <input type="submit" value="Go">
+        </form>
+        
+
+
+{% endblock %}
