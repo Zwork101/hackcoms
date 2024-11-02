@@ -93,7 +93,7 @@ def create_idea(
 		name = name,
 		description = description,
 		asl_fluent_only = asl_only,
-		desired_roles = Role.query.where(Role.role_name.in_([desired_roles])).all(),
+		desired_roles = Role.query.where(Role.role_name.in_(desired_roles)).all(),
 		started = False,
 		searching_for_contributors = True,
 		finished = False,
@@ -107,6 +107,9 @@ def create_idea(
 
 def list_roles() -> list[Tuple[str, str]]:
 	return [(r.role_name, r.role_description) for r in Role.query.all()]
+
+def save_db():
+	db.session.commit()
 
 def create_message(
 	room: Room,
