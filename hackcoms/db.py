@@ -1,5 +1,5 @@
 import datetime
-from typing import Optional
+from typing import Optional, Tuple
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -26,19 +26,23 @@ class User(UserMixin, db.Model):
 	last_name: Mapped[str]
 	hearing_impaired: Mapped[bool]
 	need_interpreter: Mapped[bool]
+	understand_asl: Mapped[bool]
 	roles: Mapped[list["Role"]] = relationship()
 
 
 class Ideas(db.Model):
 	owner: Mapped["User"] = relationship()
+	name: Mapped[str]
 	description: Mapped[str]
-	hearing_impaired_only: Mapped[bool]
 	asl_fluent_only: Mapped[bool]
 	desired_roles: Mapped[list["Role"]] = relationship()
 	started: Mapped[bool]
 	searching_for_contributors: Mapped[bool]
 	finished: Mapped[bool]
-	contributors: Mapped["User"] = relationship()
+	contributors: Mapped[list["User"]] = relationship()
+	creation_date: Mapped[datetime.datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
 
 
 class Message(db.Model):
@@ -69,4 +73,32 @@ def create_user(
 
 	db.session.add(user)
 	db.session.commit()
-	return User
+
+	return user
+
+def create_idea(
+	owner: User,
+	description: str,
+	name: str,
+	asl_only: bool,
+	desired_roles: list[str]
+	) -> Ideas:
+	idea = Ideas(
+		owner = owner,
+		name = name,
+		description = description,
+		asl_fluent_only = asl_only,
+		desired_roles = Role.query.where(Role.role_name.in_([desired_roles])).all(),
+		started = False,
+		searching_for_contributors = True,
+		finished = False,
+		contributors = []
+	)
+
+	db.session.add(idea)
+	db.session.commit()
+
+	return idea
+
+def list_roles() -> list[Tuple[str, str]]:
+	return [(r.role_name, r.role_description) for r in Role.query.all()]
