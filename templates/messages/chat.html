@@ -9,6 +9,7 @@
 	    width: 500px;
 	    background: black;
 	    color: white;
+		border-radius: 4px;
 	}
 	.msg {
 		display: flex;
@@ -43,7 +44,7 @@
 </div>
 <form id="send_invite" class="form" method="POST" action="{{ url_for('messages.make_invite') }}">
 	{{ form.csrf_token }}
-	{{ form.idea.label }} {{ form.idea() }}
+	<div class="checkBox">{{ form.idea.label }} {{ form.idea() }}</div>
 	{{ form.target() }}
 	{{ form.room() }}
 	<input type="submit" value="Send Invite">
