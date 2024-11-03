@@ -21,20 +21,30 @@
         </section>
     </div>
     <div class="col">
-        {% if idea.owner.id != current_user.id %}
-        <section>
-            <h3>Contact {{ idea.owner.username }} to apply!</h3>
-            <form method="POST" action="{{ url_for('messages.new_room') }}">
-                {{ form.csrf_token }}
-                {{ form.target_user() }}
-                <input type="submit" value="Contact">
-        </section>
+        {% if current_user.is_authenticated %}
+            {% if idea.owner.id != current_user.id %}
+            <section>
+                <h3>Contact {{ idea.owner.username }} to apply!</h3>
+                <form method="POST" action="{{ url_for('messages.new_room') }}">
+                    {{ form.csrf_token }}
+                    {{ form.target_user() }}
+                    <input type="submit" value="Contact">
+            </section>
+            {% endif %}
+            {% if current_user in idea.contributors %}
+            <section>
+                <h3>You are a contributor for this idea</h3>
+            </section>
+            {% endif %}
         {% endif %}
-        {% if current_user in idea.contributors %}
         <section>
-            <h3>You are a contributor for this idea</h3>
+            <h2>Project Contributors</h2>
+            <div class="col">
+                {% for contributor in idea.contributors %}
+                <p>{{ contributor.username }}</p>
+                {% endfor %}
+            </div>
         </section>
-        {% endif %}
     </div>
     </main>
 {% endblock %}
