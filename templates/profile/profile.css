@@ -1,0 +1,113 @@
+:ROOT{
+    color:black;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a :active {
+    color: black;
+}
+
+a :visited {
+    color: black;
+}
+
+.heading {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    
+    
+}
+
+.background img {
+    display: flex;
+    width: 800px; 
+    height: 200px; 
+    object-fit: cover;
+    border-radius: 0 0 10px 10px;
+    
+}
+
+.profile_picture img {
+    position: relative;
+    left: 20px;
+    top: -70px;
+    border-radius: 100000px;
+    width: 100px;
+    height: 100px; 
+    object-fit: cover;
+    z-index: 150;
+}
+.bio span {
+    display: flex;
+    margin-top: -70px;
+    text-align: left;
+    background-color: aliceblue;
+    border-radius: 10px;
+    padding: 5px 5px 70px 5px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.projects :hover{
+    background-color: #d8d8d8;
+    cursor: pointer;
+    transition: background 0.3s; 
+}
+
+.projects :active {
+    color: black;
+}
+
+.projects :link {
+    color: black;
+    text-decoration: none;
+}
+
+.projects :visited{
+    color: black;
+}
+.projects a{
+    padding: 8px 16px 8px 16px;
+    margin: 50px;
+}
+
+
+
+.projects div {
+
+    padding: 8px 16px 8px 16px;
+}
+
+.works, .contributions {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#container1, #container2 {
+    display: flex;
+    justify-content: center;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    width: 50%;
+    padding: 10px 100px 10px 10px;
+    background-color: azure;
+}
+
+
+
+.scroll {
+    display: inline-block;
+}
