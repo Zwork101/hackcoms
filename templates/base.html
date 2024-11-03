@@ -9,9 +9,9 @@
     <body>
         <section id="NavBar">
             <a href="index.html">Home</a>
-            <a>Published Projects</a>
-            <a>My Projects</a>
-            <a>Profile</a>
+            <a href="">Published Projects</a>
+            <a href="">My Projects</a>
+            <a href="{{ url_for('profile.show_profile', user_id=current_user.id) }}">Profile</a>
         </section>
         {% block content %}
         {% endblock %}
