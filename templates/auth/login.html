@@ -2,10 +2,8 @@
 <title>Login</title>
 {% block content %}
         <section id="loginTitle">
-            <h1>Login:</h1><br>
+            <h1><b>Login:</b></h1><br>
             <p><em>Please enter your details below</em></p>
-        </section>
-        <section>
             {% with messages = get_flashed_messages() %}
               {% if messages %}
                 <ul class=flashes>
@@ -22,6 +20,5 @@
                 {{ form.remember.label }} {{ form.remember() }}
                 <input type="submit" value="Go">
             </form>
-
         </section>
 {% endblock %}

@@ -3,7 +3,6 @@ body {
     display: flex;
     flex-flow: column;
 }
-
 #NavBar{
     margin: 36px 12px 36px 12px;
     display: flex;
@@ -15,6 +14,7 @@ body {
 #loginTitle{
     width: 400px;
     height: 500px;
+    border-radius: 16px;
     background-color: antiquewhite;
     display: flex;
     justify-content: center;

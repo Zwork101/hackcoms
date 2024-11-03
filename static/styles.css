@@ -34,3 +34,7 @@ h1{
 .scroll {
     display: inline-block;
 }
+footer{
+    display: flex;
+    flex-wrap: wrap;
+}
