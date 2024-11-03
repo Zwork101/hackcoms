@@ -79,7 +79,8 @@ class Message(db.Model):
     room: Mapped["Room"] = relationship('Room', foreign_keys='Message.room_id')
     sender: Mapped["User"] = relationship('User', foreign_keys='Message.sender_id')
     content: Mapped[str]
-    invite: Mapped[bool]
+    invite_id = Column(Integer, ForeignKey("invite.id"), nullable=True)
+    invite: Mapped["Invite"] = relationship('Invite', foreign_keys='Message.invite_id')
     timestamp: Mapped[datetime.datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
@@ -96,6 +97,38 @@ class Room(db.Model):
     participants: Mapped[list["User"]] = relationship(
         secondary="user_room", backref="rooms"
     )
+
+class Invite(db.Model):
+    __tablename__ = "invite"
+
+    idea_id = Column(Integer, ForeignKey("ideas.id"))
+    idea: Mapped["Ideas"] = relationship('Ideas', foreign_keys='Invite.idea_id')
+    target_id = Column(Integer, ForeignKey("user_account.id"))
+    target: Mapped["User"] = relationship('User', foreign_keys='Invite.target_id')
+
+def add_contributor(
+    idea: Ideas,
+    user: User
+    ):
+    
+    ic = IdeaContributor(
+        idea_id = idea.id,
+        user_id = user.id
+    )
+    db.session.add(ic)
+    db.session.commit()
+
+def create_invite(
+    idea_id: int,
+    target: User
+    ) -> Invite:
+    invite = Invite(
+        idea_id = int(idea_id),
+        target_id = int(target)
+    )
+    db.session.add(invite)
+    db.session.commit()
+    return invite
 
 def create_room(
     *participants: User
@@ -178,14 +211,22 @@ def create_message(
     room: Room,
     sender: User,
     content: str,
-    invite: bool
+    invite: int | None = None
     ) -> Message:
-    msg = Message(
-        room = room,
-        sender = sender,
-        content = content,
-        invite = invite
-    )
+
+    if invite is not None:
+        msg = Message(
+            room = room,
+            sender = sender,
+            content = content,
+            invite_id = invite
+        )
+    else:
+        msg = Message(
+            room = room,
+            sender = sender,
+            content = content,
+        )
 
     db.session.add(msg)
     db.session.commit()

@@ -15,52 +15,64 @@
 		flex-flow: row;
 	}
 </style>
-<script src="https://cdn.socket.io/4.8.0/socket.io.min.js"></script>
-<script>
-  const socket = io();
-</script>
+<script src="https://cdn.socket.io/4.8.0/socket.io.min.js" integrity="sha384-OoIbkvzsFFQAG88r+IqMAjyOtYDPGO0cqK5HF5Uosdy/zUEGySeAzytENMDynREd" crossorigin="anonymous"></script>
 {% endblock %}
 {% block content %}
 <section id="chat">
 {% for msg in messages %}
+{% if msg.invite_id %}
+<a href="{{ url_for('messages.accept_invite', invite_id=msg.invite_id) }}">
+{% endif %}
 <div class="msg">
 	{% if msg.sender != current_user %}
-	<p><b>
-		{{ msg.sender.username }}
-	</b></p>
-	<p>- {{ msg.content }}</p>
+	<b><p>
+		{{ msg.sender.username }}- {{ msg.content }}</p></b>
 	{% else %}
 	<p>
-		{{ msg.sender.username }}
-	</p>
-	<p>- {{ msg.content }}</p>
+		{{ msg.sender.username }}- {{ msg.content }}</p>
 	{% endif %}
 </div>
+{% if msg.invite_id %}
+</a>
+{% endif %}
 {% endfor %}
 </section>
-<div id="send_message">
+<div id="send_message" class="form">
 	<input type="text" id="msgbox"/>
 	<button onclick="send_msg()">Send Message</button>
 </div>
+<form id="send_invite" class="form" method="POST" action="{{ url_for('messages.make_invite') }}">
+	{{ form.csrf_token }}
+	{{ form.idea.label }} {{ form.idea() }}
+	{{ form.target() }}
+	{{ form.room() }}
+	<input type="submit" value="Send Invite">
+</form>
 <script>
 	const input = document.getElementById('msgbox');
 	const chat = document.getElementById('chat');
 
-	socket.on("connection", socket => {
-	  socket.join("{{ room.id }}");
-	});
+	const socket = io();
+	const this_user = "{{ current_user.username }}";
 
 	const send_msg  = () => {
-		socket.to("{{ room.id }}").emit('message', input.value);
-	    input.value = '';
+		if (input.value != '') {
+			socket.emit('message', {'room': '{{ room.id }}', 'message': input.value});
+	    	input.value = ''
+		}
 	}
 
-	socket.on('chat message', (msg) => {
-	    const item = document.createElement('p');
-	    item.textContent = msg;
-	    messages.appendChild(item);
+	socket.on('message', (msg) => {
+	    const item = document.createElement('div');
+	    item.classList.add("msg")
+	    if (msg.author == this_user) {
+	    	item.innerHTML = "<p>" + msg['author'] + '- ' + msg['message'] + "</p>";
+	    } else {
+	    	item.innerHTML = "<p><b>" + msg['author'] + '- ' + msg['message'] + "</b></p>";
+	    }
+	    
+	    chat.appendChild(item);
 	    window.scrollTo(0, document.body.scrollHeight);
 	  });
 </script>
-</section>
 {% endblock %}
