@@ -3,7 +3,8 @@ from os import environ
 from db import db
 from auth import login_manager, auth
 from ideas import ideas
-from messages import msgio
+from messages import msgio, messages
+from profile import profile
 
 from flask import Flask
 
@@ -20,6 +21,8 @@ def create_app() -> Flask:
 
 	app.register_blueprint(auth)
 	app.register_blueprint(ideas)
+	app.register_blueprint(messages)
+	app.register_blueprint(profile)
 
 	return app
 

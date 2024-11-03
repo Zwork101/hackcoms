@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from werkzeug.security import generate_password_hash
 from wtforms import BooleanField, PasswordField, SelectField, StringField, validators
 
-from hackcoms.db import Role, User, list_roles, save_db
+from db import Role, User, list_roles, save_db
 
 profile = Blueprint('profile', __name__)
 
@@ -17,12 +17,12 @@ class EditProfileForm(FlaskForm):
 	password            = PasswordField("Password", [validators.Length(min=6, max=25)])
 	roles               = SelectField("Your Roles", choices=list_roles)
 
-@profile.route("/profile/<user_id:int>")
+@profile.route("/profile/<int:user_id>")
 def show_profile(user_id: int):
 	user = User.query.get_or_404(user_id)
 	return render_template("profile/profile.html")
 
-@profile.route("/profile/<user_id:int>/edit", methods=["GET", "POST"])
+@profile.route("/profile/<int:user_id>/edit", methods=["GET", "POST"])
 @login_required
 def edit_profile(user_id: int):
 	if user_id != current_user.id:

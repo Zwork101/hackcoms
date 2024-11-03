@@ -16,10 +16,10 @@ class Role(db.Model):
     role_name: Mapped[str]
     role_description: Mapped[str]
     users: Mapped[list["User"]] = relationship(
-        secondary="user_roles", backref="roles"
+        secondary="user_roles", backref="roles", viewonly=True
     )
     ideas: Mapped[list["Ideas"]] = relationship("Ideas",
-        secondary="idea_roles", backref="Role"
+        secondary="idea_roles", backref="Role", viewonly=True
     )
 
 class User(UserMixin, db.Model):
@@ -63,10 +63,10 @@ class Ideas(db.Model):
     searching_for_contributors: Mapped[bool]
     finished: Mapped[bool]
     contributors: Mapped[list["User"]] = relationship(
-        secondary="idea_contributor", backref="contribs"
+        secondary="idea_contributor", backref="contribs", viewonly=True
     )
     needed_roles: Mapped[list["Role"]] = relationship("Role",
-        secondary="idea_roles", backref="Ideas"
+        secondary="idea_roles", backref="Ideas", viewonly=True
     )
     creation_date: Mapped[datetime.datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
@@ -96,9 +96,21 @@ class Room(db.Model):
     participants: Mapped[list["User"]] = relationship(
         secondary="user_room", backref="rooms"
     )
-    latest_message_id = Column(Integer, ForeignKey("message.id"))
-    latest_message: Mapped["Message"] = relationship('Message', foreign_keys='Room.latest_message_id')
 
+def create_room(
+    *participants: User
+    ) -> Room:
+    room = Room()
+    db.session.add(room)
+    db.session.commit()
+
+    db.session.bulk_save_objects([
+        UserRoom(
+            user_id=p.id, room_id=room.id
+        ) for p in participants
+    ])
+    db.session.commit()
+    return room
 
 def create_user(
     username: str, 

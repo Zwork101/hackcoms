@@ -17,5 +17,12 @@
                 {% endfor %}
             </ul>
         </section>
+        <section>
+            <h3>Contact {{ idea.owner.username }} to apply!</h3>
+            <form method="POST" action="{{ url_for('messages.new_room') }}">
+                {{ form.csrf_token }}
+                {{ form.target_user() }}
+                <input type="submit" value="Contact">
+        </section>
 
 {% endblock %}
