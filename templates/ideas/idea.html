@@ -1,14 +1,16 @@
 {% extends "base.html" %}
-<title>Idea</title>
+{% block title %}Idea{% endblock %}
 {% block content %}
-        <section>
-            <h1>Idea: {{ idea.name }}</h1>
+        <main class="row">
+        <div class="col">
+        <h1>Idea: {{ idea.name }}</h1>
+        <section id="ideaInfo">
             <p>{{ idea.owner.username }}</p>
             <p>Started: {% if idea.started %}Yes{% else %}No{% endif %}</p>
             <p>Searching: {% if idea.searching_for_contributors %}Yes{% else %}No{% endif %}</p>
             <p>Finished: {% if idea.finished %}Yes{% else %}No{% endif %}</p>
         </section>
-        <section>
+        <section id="ideaInfo">
             <p>{{ idea.description }}</p>
             <div>[Desired Roles]</div>
             <ul>
@@ -17,6 +19,8 @@
                 {% endfor %}
             </ul>
         </section>
+    </div>
+    <div class="col">
         {% if idea.owner.id != current_user.id %}
         <section>
             <h3>Contact {{ idea.owner.username }} to apply!</h3>
@@ -31,4 +35,6 @@
             <h3>You are a contributor for this idea</h3>
         </section>
         {% endif %}
+    </div>
+    </main>
 {% endblock %}

@@ -49,11 +49,26 @@ h1{
     display: flex;
     justify-content: center;
 }
-
+#ideaInfo{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
 form{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.row {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+}
+
+.col {
+    display: flex;
+    flex-flow: column;
 }
 
 form div{
