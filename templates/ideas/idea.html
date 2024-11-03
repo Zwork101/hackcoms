@@ -1,12 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
         <section>
-            <h1>Idea: [idea name]</h1>
-            <p>[Owner] [Project Status]</p>
+            <h1>Idea: {{ idea.name }}</h1>
+            <p>{{ idea.owner.username }}</p>
+            <p>Started: {% if idea.started %}Yes{% else %}No{% endif %}</p>
+            <p>Searching: {% if idea.searching_for_contributors %}Yes{% else %}No{% endif %}</p>
+            <p>Finished: {% if idea.finished %}Yes{% else %}No{% endif %}</p>
         </section>
         <section>
-            <p>[Description]</p>
+            <p>{{ idea.description }}</p>
             <div>[Desired Roles]</div>
+            <ul>
+                {% for role in idea.needed_roles %}
+                <li>{{ role.role_name }}</li>
+                {% endfor %}
+            </ul>
         </section>
         
 {% endblock %}

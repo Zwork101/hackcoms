@@ -1,13 +1,17 @@
 {% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/static/loginstyles.css">
+{% endblock %}
 {% block content %} 
         <h1>Create an account:</h1>
         <section>
             <form method="POST" action="register">
                 {{ form.csrf_token}}
                 {{ form.username.label}} {{ form.username() }}
-                {{ form.first_name.label }} {{ form.last_name() }}
+                {{ form.first_name.label }} {{ form.first_name() }}
+                {{ form.last_name.label }} {{ form.last_name() }}
                 {{ form.hearing_impaired.label }} {{ form.hearing_impaired() }}
-                {{ form.require_interpreter.lable }} {{ form.require_interpreter() }}
+                {{ form.require_interpreter.label }} {{ form.require_interpreter() }}
                 {{ form.password.label }} {{ form.password() }}
                 {{ form.accept_rules.label }} {{ form.accept_rules() }}
                 <input type="submit" value="Go">

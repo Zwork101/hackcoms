@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Chat Room{% endblock %}
+{% block head %}
+<style>
+	#chat {
+		overflow-x:hidden;
+	    overflow-y:visible;
+	    height:500px;
+	}
+	.msg {
+		display: flex;
+		flex-flow: row;
+	}
+</style>
+{% endblock %}
+{% block content %}
+<section id="chat">
+{% for msg in messages %}
+<div class="msg">
+	{% if msg.sender != current_user %}
+	<p><b>
+		{{ msg.sender.username }}
+	</b></p>
+	<p>- {{ msg.content }}</p>
+	{% else %}
+	<p>
+		{{ msg.sender.username }}
+	</p>
+	<p>- {{ msg.content }}</p>
+	{% endif %}
+</div>
+{% endfor %}
+</section>
+{% endblock %}

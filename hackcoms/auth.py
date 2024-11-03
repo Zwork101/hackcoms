@@ -9,7 +9,7 @@ from wtforms import Form, BooleanField, PasswordField, StringField, validators
 class RegistrationForm(FlaskForm):
     username     = StringField('Username', [validators.Length(min=4, max=25)])
     first_name   = StringField('First Name', [validators.Length(min=1, max=25)])
-    last_name    = StringField('Password', [validators.Length(min=1, max=25)])
+    last_name    = StringField('Last Name', [validators.Length(min=1, max=25)])
     hearing_impaired = BooleanField("Hearing Impaired", default=False)
     require_interpreter = BooleanField("Require Interpreter", default=False)
     password     = PasswordField("Password", [validators.Length(min=6, max=25)])
@@ -33,25 +33,23 @@ def register_user():
 
     if form.validate_on_submit():
 
-        email = request.form.get('email')
-        user = User.query.filter_by(email=email).first()
+        username = request.form.get('username')
+        user = User.query.filter_by(username=username).first()
 
         if user: # if a user is found, we want to redirect back to signup page so user can try again
             flash("Username already in use, have you tried: 'cheese2'?")
-            return redirect(url_for('auth.signup'))
+            return redirect(url_for('auth.register_user'))
 
         user = create_user(
             request.form.get("username"),
             request.form.get("password"),
             request.form.get("first_name"),
             request.form.get("last_name"),
-            request.form.get("hearing_impaired"),
-            request.form.get("require_interpreter")
+            bool(request.form.get("hearing_impaired")),
+            bool(request.form.get("require_interpreter"))
         )
 
-        login_user(User)
-
-        return redirect(url_for("home.index"))
+        return redirect(url_for("auth.login"))
 
     return render_template("auth/register.html", form=form)
 
@@ -68,12 +66,12 @@ def login_submit():
     if form.validate_on_submit():
         username = request.form.get('username')
 
-        user = User.query.filter_by(username='username').first()
+        user = User.query.where(User.username == username).first()
         if user is None:
             flash(f"Unable to find user {username}")
             return redirect(url_for("auth.login"))
 
-        if not check_password_hash(user.password, request.form.get('password')):
+        if not check_password_hash(user.password.decode(), request.form.get('password')):
             flash("Invalid password")
             return redirect(url_for("auth.login"))
 

@@ -2,6 +2,7 @@ from os import environ
 
 from db import db
 from auth import login_manager, auth
+from ideas import ideas
 from messages import msgio
 
 from flask import Flask
@@ -18,6 +19,7 @@ def create_app() -> Flask:
 	msgio.init_app(app)
 
 	app.register_blueprint(auth)
+	app.register_blueprint(ideas)
 
 	return app
 

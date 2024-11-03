@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-        <h1>Ideas:</h1> 
+        <h1>Ideas:</h1>
+        {% for idea in ideas %}
+        <a href="{{ url_for('ideas.idea_page', idea_id=idea.id) }}">
         <section>
+                <h3>{{ idea.name }}</h3>
+                <p>{{ idea.description }}</p>
+                <p>{% for role in idea.needed_roles %}{{ role.role_name }}, {% endfor %}</p>
         </section>
+        </a>
+        {% endfor %}
         
 {% endblock %}
