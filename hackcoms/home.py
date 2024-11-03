@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from db import Ideas
+from hackcoms.db import Ideas
 
 from flask import Blueprint, render_template
 import pytz

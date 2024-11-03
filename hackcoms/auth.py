@@ -1,4 +1,4 @@
-from db import User, create_user
+from hackcoms.db import User, create_user
 
 from flask import Blueprint, flash, render_template, request, redirect, url_for
 from flask_login import LoginManager, login_user, login_required, logout_user

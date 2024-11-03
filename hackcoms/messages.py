@@ -3,7 +3,7 @@ import functools
 from flask_wtf import FlaskForm
 from wtforms import HiddenField, SelectField
 
-from db import Ideas, Invite, Message, Room, User, add_contributor, create_invite, create_message, create_room
+from hackcoms.db import Ideas, Invite, Message, Room, User, add_contributor, create_invite, create_message, create_room
 
 from bleach import clean
 from flask import abort, Blueprint, redirect, render_template, request, url_for
