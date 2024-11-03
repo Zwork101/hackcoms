@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from db import Ideas, list_roles, create_idea
+from messages import RoomForm
 
 from flask import abort, Blueprint, redirect, render_template, request, url_for
 from flask_login import login_required, current_user
@@ -28,18 +29,21 @@ class IdeaForm(FlaskForm):
 @ideas.route("/idea")
 @login_required
 def make_idea():
-	form = IdeaForm()
+	form = IdeaForm(target)
 	return render_template("ideas/make.html", form=form)
 
 
 @ideas.route("/idea/<int:idea_id>")
 def idea_page(idea_id: int):
 	idea = Ideas.query.get(idea_id)
+	form = RoomForm(target_user=idea.owner.id)
+	# form.target_user.default = 
+	# import pdb; pdb.set_trace()
 
 	if not idea:
 		abort(404, "Unable to find Idea")
 
-	return render_template("ideas/idea.html", idea=idea)
+	return render_template("ideas/idea.html", idea=idea, form=form)
 
 @ideas.route("/idea", methods=["POST"])
 @login_required

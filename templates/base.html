@@ -12,8 +12,10 @@
         <section id="NavBar">
             <a href="index.html">Home</a>
             <a href="">Published Projects</a>
+            {% if current_user.is_authenticated %}
             <a href="">My Projects</a>
             <a href="{{ url_for('profile.show_profile', user_id=current_user.id) }}">Profile</a>
+            {% endif %}
         </section>
         {% block content %}
         {% endblock %}

@@ -3,8 +3,12 @@
 {% block content %}
         <section>
             <h1>Messages:</h1>
-                <div>[chat room1]</div>
-                <div>[chat room2]</div>
-                <div>[chat room3]</div>
+            {% for room in rooms %}
+            <a href="{{ url_for('messages.message_room', room_id=room[1]) }}">
+                <section>
+                    <h2>{{ room[0] }}</h2>
+                </section>
+            </a>
+            {% endfor %}
         </section>
 {% endblock %}

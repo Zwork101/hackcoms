@@ -5,13 +5,20 @@
 	#chat {
 		overflow-x:hidden;
 	    overflow-y:visible;
-	    height:500px;
+	    height:300px;
+	    width: 500px;
+	    background: black;
+	    color: white;
 	}
 	.msg {
 		display: flex;
 		flex-flow: row;
 	}
 </style>
+<script src="https://cdn.socket.io/4.8.0/socket.io.min.js"></script>
+<script>
+  const socket = io();
+</script>
 {% endblock %}
 {% block content %}
 <section id="chat">
@@ -30,5 +37,30 @@
 	{% endif %}
 </div>
 {% endfor %}
+</section>
+<div id="send_message">
+	<input type="text" id="msgbox"/>
+	<button onclick="send_msg()">Send Message</button>
+</div>
+<script>
+	const input = document.getElementById('msgbox');
+	const chat = document.getElementById('chat');
+
+	socket.on("connection", socket => {
+	  socket.join("{{ room.id }}");
+	});
+
+	const send_msg  = () => {
+		socket.to("{{ room.id }}").emit('message', input.value);
+	    input.value = '';
+	}
+
+	socket.on('chat message', (msg) => {
+	    const item = document.createElement('p');
+	    item.textContent = msg;
+	    messages.appendChild(item);
+	    window.scrollTo(0, document.body.scrollHeight);
+	  });
+</script>
 </section>
 {% endblock %}
