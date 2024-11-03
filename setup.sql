@@ -3,3 +3,8 @@ INSERT INTO role (role_name, role_description) VALUES ('Backkend Dev', 'lowenfow
 INSERT INTO role (role_name, role_description) VALUES ('Designer', 'lowenfowno');
 INSERT INTO role (role_name, role_description) VALUES ('Business', 'lowenfowno');
 INSERT INTO role (role_name, role_description) VALUES ('Cybersecurity', 'lowenfowno');
+INSERT INTO role (role_name, role_description) VALUES ('Graphic Designer', 'lowenfowno');
+INSERT INTO role (role_name, role_description) VALUES ('Game Dev', 'lowenfowno');
+INSERT INTO role (role_name, role_description) VALUES ('Mobile Dev', 'lowenfowno');
+INSERT INTO role (role_name, role_description) VALUES ('Network Engineer', 'lowenfowno');
+INSERT INTO role (role_name, role_description) VALUES ('Sys Admin', 'lowenfowno');

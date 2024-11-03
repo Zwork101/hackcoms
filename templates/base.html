@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/static/styles.css">
+        <link rel="icon" type="image/png" href="/static/assets/favicon.png">
         {% block head %}
         {% endblock %}
     </head>
@@ -12,30 +13,41 @@
         <section id="NavBar">
             <a href="{{ url_for('home.index') }}">Home</a>
             <a href="{{ url_for('ideas.list_ideas') }}">Listed Projects</a>
+            {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('auth.register_user') }}">Register</a>
+            <a href="{{ url_for('auth.login') }}">Login</a>
+            {% endif %}
             {% if current_user.is_authenticated %}
             <a href="{{ url_for('ideas.idea_creation') }}">Start Project</a>
             <a href="{{ url_for('messages.list_messages') }}">Messages</a>
-            <a href="{{ url_for('profile.show_profile', user_id=current_user.id) }}">Profile</a>
+            <a href="{{ url_for('profile.show_profile', user_id=current_user.id) }}">Profile ({{ current_user.username }})</a>
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
             {% endif %}
         </section>
         {% block content %}
         {% endblock %}
     </body>
-    <footer>
-        <section>
+    <footer class="row">
+        <section class="col foot">
             <h3>Mission</h3>
-            <p>[Mission Description]</p>
-            <p>[Mission Description]</p>
-            <p>[Mission Description]</p>
-            <p>[Mission Description]</p>
+            <p>Have you ever had an idea so good, it would take a large group to get off the ground? Have you ever wanted to use and hone the skills you've developed in college? RIT GroupUs is the solution to both these problems. RIT GroupUs is setting out to match talents with people's ideas, and turn dreams into dream teams.</p>
         </section>
-        <section>
+        <section class="col foot">
             <h3>Contact us</h3>
-            <p>[List of contacts]</p>
+            <address>
+                Nathan Zilora<br>
+                GroupUs<br>
+                6000 Reynolds Dr<br>
+                Rochester NY 14623<br>
+            </address>
+            <p><a href="mailto:">contact@rit-group.us</a></p>
         </section>
-        <section>
+        <section class="col foot">
             <h3>Usefull Links</h3>
-            <p>[Sign in and Login links]</p>
+            <p><a href="{{ url_for('home.index') }}">Homepage</a></p>
+            <p><a href="{{ url_for('auth.register_user') }}">Register</a></p>
+            <p><a href="{{ url_for('auth.login') }}">Login</a></p>
+            <p><a href="{{ url_for('ideas.list_ideas') }}">List Ideas</a></p>
         </section>
     </footer>
 </html>

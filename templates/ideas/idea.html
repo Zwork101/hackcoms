@@ -5,7 +5,7 @@
         <div class="col">
         <h1>Idea: {{ idea.name }}</h1>
         <section id="ideaInfo">
-            <p>{{ idea.owner.username }}</p>
+            <h2>Owner: {{ idea.owner.username }}</h2>
             <p>Started: {% if idea.started %}Yes{% else %}No{% endif %}</p>
             <p>Searching: {% if idea.searching_for_contributors %}Yes{% else %}No{% endif %}</p>
             <p>Finished: {% if idea.finished %}Yes{% else %}No{% endif %}</p>
@@ -39,11 +39,11 @@
         {% endif %}
         <section>
             <h2>Project Contributors</h2>
-            <div class="col">
+            <ul class="col">
                 {% for contributor in idea.contributors %}
-                <p>{{ contributor.username }}</p>
+                <li>{{ contributor.username }}</li>
                 {% endfor %}
-            </div>
+            </ul>
         </section>
     </div>
     </main>

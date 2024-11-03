@@ -1,53 +1,60 @@
 {% extends "base.html" %}
-{}<link rel="stylesheet" href="static/profile.css">
+{% block title %}
+{{ user.username }}'s Profile
+{% endblock %}
+<link rel="stylesheet" href="static/profile.css">
 {% block content %}
-        <section class="heading">
-            <div class="background">
-                <img src="static/assets/wallpaper.png" alt="banner">
-            </div>
-
-            <div class="profile_picture">
-                <img src="static/assets/template.png" alt="profile">
-            </div>
-            <div class="bio">
-                <span>About me...</span>
-            </div>
-        </section>
-
-        <section class="navbar">
-            <div class="projects">
-                <a href="#projects_background">Projects</a>
-                <a href="#contributions_background">Contributions</a>
-            </div>
-        </section>
-
-        <section class="works">
-            <h2>Projects</h2>
-            <div id="container1">
-                <div id="#projects_background">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
+<header class="row full-width">
+    <div class="col">
+        <h1>{{ user.username }}</h1>
+        <p>{{ user.first_name }} {{ user.last_name }}</p>
+    </div>
+    <div class="col">
+        <p>Hearing Impaired: {{ user.hearing_impaired }}</p>
+        <p>Uses Interpreter: {{ user.need_interpreter }}</p>
+        <p>Knows ASL: {{ user.understand_asl }}</p>
+    </div>
+</header>
+<main class="row">
+    <section class="col width-40">
+        <h2>Ideas Started</h2>
+        <div class="col listed">
+            {% for project in started_ideas %}
+            <a href="{{ url_for('ideas.idea_page', idea_id=project.id) }}" class="no-link">
+                <article class="row">
+                    <div class="basic-info col">
+                        <h3>{{ project.name }}</h3>
+                        <p>{{ project.owner.username }}</p>
+                    </div>
+                    <div class="desc">
+                        <p>{{ project.description }}</p>
+                    </div>
+                    <div class="basic-info col">
+                        <h3>Currently Interested: {{ project.contributors | length }}</h3>
+                        <p>Desired Roles: {{ project.needed_roles | join(", ", attribute="role_name") }}</p>
+                    </div>
+                </article>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+    <section class="col width-40">
+        <h2>Contributor For</h2>
+        <div class="col listed">
+            {% for project in contributed_ideas %}
+            <article>
+                <div class="basic-info col">
+                    <h3>{{ project.name }}</h3>
+                    <p>{{ project.owner.username }}</p>
                 </div>
-            </div>
-        </section>
-
-        <section class="contributions">
-            <h2>Contributions</h2>
-            <div id="container2">
-                <div id="contributions_background">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
-                    <img src="static/assets/images.jpg" alt="picture of project" class="scroll">
+                <div class="desc">
+                    <p>{{ project.description }}</p>
                 </div>
-            </div>
-        </section>
+                <div class="basic-info col">
+                    <h3>Total Contributors: {{ project.contributors | length }}</h3>
+                </div>
+            </article>
+            {% endfor %}
+    </section>
+</main>
 {% endblock %}

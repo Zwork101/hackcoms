@@ -2,9 +2,9 @@ from flask import Blueprint, abort, render_template, request
 from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
 from werkzeug.security import generate_password_hash
-from wtforms import BooleanField, PasswordField, SelectField, StringField, validators
+from wtforms import BooleanField, PasswordField, SelectField, SelectMultipleField, StringField, validators
 
-from db import Role, User, list_roles, save_db
+from db import Ideas, Role, User, list_roles, save_db
 
 profile = Blueprint('profile', __name__)
 
@@ -15,12 +15,16 @@ class EditProfileForm(FlaskForm):
 	hearing_impaired    = BooleanField("Hearing Impaired", default=False)
 	require_interpreter = BooleanField("Require Interpreter", default=False)
 	password            = PasswordField("Password", [validators.Length(min=6, max=25)])
-	roles               = SelectField("Your Roles", choices=list_roles)
+	roles               = SelectMultipleField("Your Roles", choices=list_roles)
 
 @profile.route("/profile/<int:user_id>")
 def show_profile(user_id: int):
 	user = User.query.get_or_404(user_id)
-	return render_template("profile/profile.html")
+
+	started_ideas = Ideas.query.where(Ideas.owner == user).all()
+	contributed_ideas = Ideas.query.where(Ideas.contributors.contains(user)).all()
+
+	return render_template("profile/profile.html", started_ideas=started_ideas, contributed_ideas=contributed_ideas, user=user)
 
 @profile.route("/profile/<int:user_id>/edit", methods=["GET", "POST"])
 @login_required
