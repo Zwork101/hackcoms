@@ -10,10 +10,11 @@
     </head>
     <body>
         <section id="NavBar">
-            <a href="index.html">Home</a>
-            <a href="">Published Projects</a>
+            <a href="{{ url_for('home.index') }}">Home</a>
+            <a href="{{ url_for('ideas.list_ideas') }}">Listed Projects</a>
             {% if current_user.is_authenticated %}
-            <a href="">My Projects</a>
+            <a href="{{ url_for('ideas.idea_creation') }}">Start Project</a>
+            <a href="{{ url_for('messages.list_messages') }}">Messages</a>
             <a href="{{ url_for('profile.show_profile', user_id=current_user.id) }}">Profile</a>
             {% endif %}
         </section>

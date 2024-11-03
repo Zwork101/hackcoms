@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}RIT GroupUs{% endblock %}
+{% block content %}
+<header class="col">
+	<h1>RIT GroupUs</h1>
+	<p class="cap-width">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum </p>
+</header>
+<main class="row">
+	<section class="col">
+		<h2>Ideas Looking for Contributors</h2>
+		<div class="col listed">
+			{% for project in projects %}
+			<a href="{{ url_for('ideas.idea_page', idea_id=project.id) }}" class="no-link">
+				<article class="row">
+					<div class="basic-info col">
+						<h3>{{ project.name }}</h3>
+						<p>{{ project.owner.username }}</p>
+					</div>
+					<div class="desc">
+						<p>{{ project.description }}</p>
+					</div>
+					<div class="basic-info col">
+						<h3>Currently Interested: {{ project.contributors | length }}</h3>
+						<p>Desired Roles: {{ project.needed_roles | join(", ", attribute="role_name") }}</p>
+					</div>
+				</article>
+			</a>
+			{% endfor %}
+		</div>
+	</section>
+	<section class="col">
+		<h2>Finished Projects</h2>
+		<div class="col listed">
+			{% for project in finished %}
+			<article>
+				<div class="basic-info col">
+					<h3>{{ project.name }}</h3>
+					<p>{{ project.owner.username }}</p>
+				</div>
+				<div class="desc">
+					<p>{{ project.description }}</p>
+				</div>
+				<div class="basic-info col">
+					<h3>Total Contributors: {{ project.contributors | length }}</h3>
+				</div>
+			</article>
+			{% endfor %}
+	</section>
+</main>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}
+Edit Profile
+{% endblock %}
+{% block content %}
+      <h1>Edit Profile</h1>
+        <section id="editProfile">
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <ul class="flashes">
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+            <form method="POST" action="/login">
+                {{ form.csrf_token }}
+                <div>{{ form.username.label}} {{ form.username() }}</div>
+                <div>{{ form.first_name.label }} {{ form.first_name() }}</div>
+                <div>{{ form.last_name.label }} {{ form.last_name() }}</div>
+                <div class="checkBox">{{ form.hearing_impaired.label }} {{ form.hearing_impaired() }}</div>
+                <div class="checkBox">{{ form.require_interpreter.label }} {{ form.require_interpreter() }}</div>
+                <div>{{ form.password.label }} {{ form.password() }}</div>
+                <div>{{ form.roles.label }} {{ form.roles() }}</div>
+                <input type="submit" value="Save">
+            </form>
+        </section>
+{% endblock %}

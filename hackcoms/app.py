@@ -1,10 +1,11 @@
 from os import environ
 
-from db import db
+from db import User, create_user, db
 from auth import login_manager, auth
 from ideas import ideas
 from messages import msgio, messages
 from profile import profile
+from home import home
 
 from flask import Flask
 
@@ -23,12 +24,17 @@ def create_app() -> Flask:
 	app.register_blueprint(ideas)
 	app.register_blueprint(messages)
 	app.register_blueprint(profile)
+	app.register_blueprint(home)
 
 	return app
 
 def setup_databases(app: Flask):
 	with app.app_context():
 	    db.create_all()
+
+	    if User.query.get(1) is None:
+	    	create_user("zwack", "password", "zwack", "zwack", False, False)
+	    	create_user("evan", "password", "zwack", "zwack", False, False)
 
 if __name__ == "__main__":
 	app = create_app()

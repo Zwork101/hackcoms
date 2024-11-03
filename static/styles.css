@@ -3,13 +3,44 @@
     --footercolor:blanchedalmond;
     --navcolor:beige;
 }
+
+.cap-width {
+    max-width: 700px;
+}
+
+.no-link {
+  color: blue;
+  text-decoration: none; /* no underline */
+}
+
+.no-link:hover {
+    color: lightblue;
+}
+
+.row article {
+    justify-content: space-between;
+    gap: 40px;
+    border: black 2px solid;
+    border-radius: 2px;
+    padding: 5px;
+    background: var(--navcolor);
+}
+
+.listed {
+    gap: 10px;
+}
+
+header {
+    align-items: center;
+}
+
 body{
     margin: 0px;
     padding: 0px;
 }
 h1{
     display: flex;
-    justify-content: center;
+    justify-content: left;
 }
 #NavBar{
     display: flex;
