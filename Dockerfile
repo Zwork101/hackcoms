@@ -26,4 +26,4 @@ RUN pip install --no-cache-dir -r requirements.txt --break-system-packages
 
 EXPOSE 80
 
-CMD gunicorn  --workers=3 --threads=3 hackcoms.app:app --bind 0.0.0.0:80
+CMD flask -A hackcoms.app:app run --host 0.0.0.0 --port 80
