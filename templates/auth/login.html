@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 <title>Login</title>
 {% block content %}
+      <h1>Login:</h1>
         <section id="loginTitle">
-            <h1><b>Login:</b></h1><br>
             <p><em>Please enter your details below</em></p>
             {% with messages = get_flashed_messages() %}
               {% if messages %}
@@ -15,9 +15,9 @@
             {% endwith %}
             <form method="POST" action="/login">
                 {{ form.csrf_token }}
-                {{ form.username.label }} {{ form.username() }}
-                {{ form.password.label }} {{ form.password() }}
-                {{ form.remember.label }} {{ form.remember() }}
+                <div>{{ form.username.label }} {{ form.username() }}</div>
+                <div>{{ form.password.label }} {{ form.password() }}</div>
+                <div class="checkBox">{{ form.remember.label }} {{ form.remember() }}</div>
                 <input type="submit" value="Go">
             </form>
         </section>

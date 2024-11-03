@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block head %}
-<link rel="stylesheet" href="/static/loginstyles.css">
 {% endblock %}
 <title>Register</title>
 {% block content %} 
@@ -8,13 +7,13 @@
         <section>
             <form method="POST" action="/register">
                 {{ form.csrf_token}}
-                {{ form.username.label}} {{ form.username() }}
-                {{ form.first_name.label }} {{ form.first_name() }}
-                {{ form.last_name.label }} {{ form.last_name() }}
-                {{ form.hearing_impaired.label }} {{ form.hearing_impaired() }}
-                {{ form.require_interpreter.label }} {{ form.require_interpreter() }}
-                {{ form.password.label }} {{ form.password() }}
-                {{ form.accept_rules.label }} {{ form.accept_rules() }}
+                <div>{{ form.username.label}} {{ form.username() }}</div>
+                <div>{{ form.first_name.label }} {{ form.first_name() }}</div>
+                <div>{{ form.last_name.label }} {{ form.last_name() }}</div>
+                <div class="checkBox">{{ form.hearing_impaired.label }} {{ form.hearing_impaired() }}</div>
+                <div class="checkBox">{{ form.require_interpreter.label }} {{ form.require_interpreter() }}</div>
+                <div>{{ form.password.label }} {{ form.password() }}</div>
+                <div class="checkBox">{{ form.accept_rules.label }} {{ form.accept_rules() }}</div>
                 <input type="submit" value="Go">
             </form>
         </section>

@@ -1,14 +1,22 @@
-:ROOT{
+:root{
     color:black;
+    --footercolor:blanchedalmond;
+    --navcolor:beige;
+}
+body{
+    margin: 0px;
+    padding: 0px;
 }
 h1{
-    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 #NavBar{
     display: flex;
     justify-content: space-evenly;
-    padding: 8px 16px 8px 16px;
-    margin: 12px;
+    padding: 16px;
+    margin-bottom: 36px;
+    background-color: var(--navcolor);
 }
 #NavBar div{
     padding: 12px 12px 0px 12px;
@@ -17,6 +25,9 @@ h1{
     width: 40px;
     height: 40px;
     border-radius: 21px;
+}
+#NavBar a{
+    padding: 12px;
 }
 #NavBar :hover{
     background-color: black;
@@ -34,7 +45,33 @@ h1{
 .scroll {
     display: inline-block;
 }
+#loginTitle p{
+    display: flex;
+    justify-content: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form div{
+    padding: 6px 0px 6px;
+}
+form .checkBox div{
+    display: flex;
+    flex-direction: row;
+}
+.flashes{
+    display: flex;
+    justify-content: center;
+    color: red;
+}
 footer{
     display: flex;
     flex-wrap: wrap;
+    background-color: var(--footercolor);
+    margin-top: 48px;
+    justify-content: space-evenly;
 }
