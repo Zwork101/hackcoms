@@ -7,7 +7,7 @@ WORKDIR /var/www/GroupUs
 
 COPY requirements.txt .
 
-COPY hackcoms locker
+COPY hackcoms hackcoms
 COPY static static
 COPY templates templates
 COPY db.sql db.sql
@@ -21,7 +21,6 @@ RUN apt-get --yes install postgresql-17
 RUN apt clean
 
 ARG POSTGRES_URI
-RUN psql ${POSTGRES_URI} -f db.sql
 
 RUN pip install --no-cache-dir -r requirements.txt --break-system-packages
 
