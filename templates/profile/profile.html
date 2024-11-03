@@ -8,6 +8,11 @@
     <div class="col">
         <h1>{{ user.username }}</h1>
         <p>{{ user.first_name }} {{ user.last_name }}</p>
+        {% if current_user.is_authenticated %}
+            {% if current_user.id == user.id %}
+        <a href="{{ url_for('profile.edit_profile', user_id=current_user.id) }}">Edit Profile</a>
+            {% endif %}
+        {% endif }
     </div>
     <div class="col">
         <p>Hearing Impaired: {{ user.hearing_impaired }}</p>
