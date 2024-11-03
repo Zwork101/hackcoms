@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from db import Ideas, list_roles, create_idea
-from messages import RoomForm
+from hackcoms.db import Ideas, list_roles, create_idea
+from hackcoms.messages import RoomForm
 
 from flask import abort, Blueprint, redirect, render_template, request, url_for
 from flask_login import login_required, current_user

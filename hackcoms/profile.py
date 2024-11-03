@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from werkzeug.security import generate_password_hash
 from wtforms import BooleanField, PasswordField, SelectField, SelectMultipleField, StringField, validators
 
-from db import Ideas, Role, User, list_roles, save_db
+from hackcoms.db import Ideas, Role, User, list_roles, save_db
 
 profile = Blueprint('profile', __name__)
 
