@@ -2,10 +2,11 @@
 {% block head %}
 <link rel="stylesheet" href="/static/loginstyles.css">
 {% endblock %}
+<title>Register</title>
 {% block content %} 
         <h1>Create an account:</h1>
         <section>
-            <form method="POST" action="register">
+            <form method="POST" action="/register">
                 {{ form.csrf_token}}
                 {{ form.username.label}} {{ form.username() }}
                 {{ form.first_name.label }} {{ form.first_name() }}
